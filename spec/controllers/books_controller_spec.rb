@@ -19,8 +19,8 @@ describe BooksController do
     end
   end
 
-  describe "POST #create"
-    describe "on success"
+  describe "POST #create" do
+    describe "on success" do
       it "creates a new book when valid parameters are passed" do
         expect {
           post :create, book: { title: "Harry Potter", author: "Some Muggle" }
@@ -33,4 +33,5 @@ describe BooksController do
         expect(response).to redirect_to books_path
       end
     end
+  end
 end

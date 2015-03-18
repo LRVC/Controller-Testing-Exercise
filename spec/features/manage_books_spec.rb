@@ -8,4 +8,18 @@ feature "Managing books" do
     expect(page).to have_content "Harry Potter"
     expect(page).to have_content "Some Muggle"
   end
+
+  scenario "Can create new books with titles and authors" do
+    visit root_path
+
+    click_on "New Book"
+
+    fill_in 'Title', with: "Harry Potter"
+    fill_in 'Author', with: "Some Muggle"
+
+    click_on "Create Book"
+
+    expect(page).to have_content "Harry Potter"
+    expect(page).to have_content "Some Muggle"
+  end
 end

@@ -48,4 +48,32 @@ describe BooksController do
     end
   end
 
+  describe "PATCH #update" do
+    describe "on success" do
+      it "updates a book with valid attributes" do
+        book = create_book(title: "Harry Potter", author: "Some Muggle")
+
+        expect {
+          patch :update, id: book.id, book: { title: "Harry Potter", author: "J.K. Rowling" }
+        }.to change { book.reload.author }.from("Some Muggle").to("J.K. Rowling")
+
+        expect(flash[:notice]).to eq "Book Updated"
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    describe "on failure" do
+      it "does not update a book with invalid credentials" do
+        book = create_book(title: "Harry Potter", author: "Some Muggle")
+
+        expect {
+          patch :update, id: book.id, book: { title: nil, author: "J.K. Rowling" }
+        }.to_not change { book.reload.title }
+
+        expect(assigns(:book)).to eq(book)
+        expect(flash[:notice]).to eq "Unable to update book"
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
 end

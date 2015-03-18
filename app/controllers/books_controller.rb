@@ -16,4 +16,18 @@ class BooksController < ApplicationController
       render :new
     end
   end
+
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(params.require(:book).permit(:title, :author))
+      redirect_to root_path, notice: "Book Updated"
+    else
+      flash[:notice] = "Unable to update book"
+      render :edit
+    end
+  end
 end

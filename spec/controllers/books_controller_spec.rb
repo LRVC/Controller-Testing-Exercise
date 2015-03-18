@@ -76,4 +76,18 @@ describe BooksController do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    it "deletes a book" do
+      book = create_book
+
+      expect {
+        delete :destroy, id: book.id
+      }.to change { Book.all.count }.by(-1)
+
+      expect(flash[:notice]).to eq "Book destroyed"
+      expect(response).to redirect_to root_path
+    end
+  end
+
 end

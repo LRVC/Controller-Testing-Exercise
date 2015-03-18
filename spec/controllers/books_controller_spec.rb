@@ -33,5 +33,19 @@ describe BooksController do
         expect(response).to redirect_to books_path
       end
     end
+
+    describe "on failure" do
+      it "does not create a book if it is invalid" do
+        expect {
+          post :create, book: { title: nil, author: "Some Muggle" }
+        }.to_not change { Book.all.count }
+
+
+        expect(flash[:notice]).to eq "Something went wrong"
+        expect(response).to render_template(:new)
+        expect(assigns(:book)).to be_a(Book)
+      end
+    end
   end
+
 end

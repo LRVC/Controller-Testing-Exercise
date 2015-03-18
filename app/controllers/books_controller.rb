@@ -12,6 +12,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to books_path, notice: "Book Created"
     else
+      flash[:notice] = "Something went wrong"
       render :new
     end
   end
